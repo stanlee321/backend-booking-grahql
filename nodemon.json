@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "stanlee321",
+        "MONGO_PASSWORD": "12345",
+        "MONGO_DB_NAME": "booking"
+    }
+}
