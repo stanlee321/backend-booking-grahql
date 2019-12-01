@@ -9,8 +9,6 @@ const graphQlResolvers = require('./graphql/resolvers/index');
 const app = express();
 
 
-
-
 app.use(bodyParser.json());
 
 app.use("/graphql", graphqlHttp({
@@ -20,7 +18,9 @@ app.use("/graphql", graphqlHttp({
 })
 )
 
-mongoose.connect(`mongodb://127.0.0.1:27017/${process.env.MONGO_DB_NAME}`)
+mongoose.connect(`mongodb://127.0.0.1:27017/${process.env.MONGO_DB_NAME}`, 
+                {useNewUrlParser: true, useUnifiedTopology: true})
+                
     .then(() => {
         app.listen(3000);
     })
