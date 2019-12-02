@@ -6,7 +6,12 @@ const { transformBooking, transformEvent } = require("./merge")
 // RESOLVERS
 module.exports = { // Resolvers
 
-    bookings: async () => {
+    bookings: async (args, req) => {
+
+        if (!req.isAuth){
+            throw new Error("Unauthenticated!")
+        }
+
         try{
            const bookings = await  Booking.find();
            return bookings.map(booking => {
@@ -17,13 +22,17 @@ module.exports = { // Resolvers
         }
     },
     // Booking event resolver
-    bookEvent: async args => {
+    bookEvent: async (args, req) => {
+        
+        if (!req.isAuth){
+            throw new Error("Unauthenticated!")
+        }
         const fetchedEvent  = await Event.findOne({
             _id: args.eventId
         });
 
         const booking  = new Booking({
-            user: "5de12b165a515519b12a110a",
+            user: req.userId,
             event: fetchedEvent
         });
         
