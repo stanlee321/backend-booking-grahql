@@ -11,6 +11,21 @@ const isAuth = require('./middleware/is-auth');
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use((req,res,next)=>{
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", 'POST,GET,OPTIONS');
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type", "Authorization")
+
+    if (req.method === "OPTIONS"){
+        return res.sendStatus(200);
+    }
+
+    next();
+})
+
+
+
 app.set(isAuth);
 
 
@@ -31,4 +46,4 @@ mongoose.connect(`mongodb://127.0.0.1:27017/${process.env.MONGO_DB_NAME}`,
         console.log(`Error is: ${err}`)
     });
 
-app.listen(3001);
+app.listen(8000);
